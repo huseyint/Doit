@@ -1,0 +1,170 @@
+﻿<Window x:Class="Doit.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:actions="clr-namespace:Doit.Actions" xmlns:controls="clr-namespace:Doit.Controls"
+		Title="MainWindow"
+		Width="525"
+		Height="62"
+		AllowsTransparency="True"
+		Background="Transparent"
+		WindowStyle="None"
+		ResizeMode="NoResize"
+		ShowInTaskbar="False"
+		Topmost="True"
+		UseLayoutRounding="True"
+		SnapsToDevicePixels="True"
+		FocusManager.FocusedElement="{Binding ElementName=InputBox}"
+		Loaded="Window_Loaded"
+		PreviewKeyDown="MainWindow_OnPreviewKeyDown"
+		PreviewKeyUp="MainWindow_OnPreviewKeyUp">
+	<Window.Resources>
+		<Style x:Key="UserAreaFont" Style.TargetType="{x:Type FrameworkElement}">
+			<Setter Property="TextElement.FontFamily" Setter.Value="Segoe UI" />
+			<Setter Property="TextElement.FontSize" Setter.Value="24" />
+			<Setter Property="TextElement.FontWeight" Setter.Value="Medium" />
+			<Setter Property="TextElement.Foreground" Setter.Value="#FF3E3E3E" />
+		</Style>
+
+		<DataTemplate DataType="{x:Type actions:ActionItem}">
+			<Grid Height="48">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="60" />
+				</Grid.ColumnDefinitions>
+				<Image Grid.Column="0"
+					   Source="{Binding Action.Icon}"
+					   Width="32"
+					   Height="32"/>
+				<StackPanel Grid.Column="1"
+							Orientation="Vertical"
+							Margin="4,0,0,0">
+					<TextBlock Style="{StaticResource UserAreaFont}"
+								Text="{Binding Action.Text}"
+								VerticalAlignment="Center"
+								TextTrimming="CharacterEllipsis" />
+					<TextBlock Style="{StaticResource UserAreaFont}"
+							   FontSize="12"
+							   Foreground="Gray"
+							   FontWeight="Normal"
+							   Text="{Binding Action.Hint}"
+							   TextTrimming="CharacterEllipsis" />
+				</StackPanel>
+
+				<Image Grid.Column="2"
+					   Source="/Images/Return16.png"
+					   Width="16"
+					   Height="16">
+					<Image.Style>
+						<Style TargetType="{x:Type Image}">
+							<Setter Property="Visibility" Value="Collapsed"/>
+							<Style.Triggers>
+								<DataTrigger
+									Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+									Value="True">
+									<Setter Property="Visibility" Value="Visible"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</Image.Style>
+				</Image>
+				<TextBlock Grid.Column="2"
+						   Text="{Binding Order}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   Margin="4,0,0,0"
+						   FontSize="14"
+						   TextDecorations="Underline">
+					<TextBlock.Style>
+						<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource UserAreaFont}">
+							<Setter Property="Visibility" Value="Collapsed"/>
+							<Style.Triggers>
+								<DataTrigger
+									Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+									Value="False">
+									<Setter Property="Visibility" Value="Visible"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
+			</Grid>
+		</DataTemplate>
+	</Window.Resources>
+	
+	<Border Background="#66666666"
+			CornerRadius="6">
+		<Border 
+			CornerRadius="6"
+			BorderThickness="1"
+			BorderBrush="#99999999"
+			Background="#FFFFFFFF"
+			Margin="8">
+
+			<Grid VerticalAlignment="Top">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<Grid Margin="2,0,2,0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<ItemsControl ItemsSource="{Binding AccumulatedActions}"
+								  Margin="0,3,0,3">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Horizontal" />
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Border BorderThickness="1"
+										BorderBrush="#FFDADADA"
+										Background="#FFF6F6F6"
+										Margin="2,0,0,0">
+									<TextBlock Text="{Binding}"
+											   Style="{StaticResource UserAreaFont}"
+											   FontSize="21"
+											   VerticalAlignment="Center"
+											   Margin="2,0,2,0" />
+								</Border>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+					
+					<TextBox x:Name="InputBox"
+							 Grid.Column="1"
+							Style="{StaticResource UserAreaFont}"
+						 Text="{Binding Query, UpdateSourceTrigger=PropertyChanged}"
+							VerticalAlignment="Center"
+						Background="Transparent"
+						BorderThickness="0"
+						Margin="3,6,3,3"
+							PreviewKeyDown="InputBox_OnPreviewKeyDown" />
+				</Grid>
+				
+
+				<controls:ActionsListBox x:Name="ActionsListBox"
+						 Grid.Row="1"
+							BorderThickness="0"
+							Visibility="Collapsed"
+						 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+						 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+							Margin="3,0,3,0"
+						 Background="Transparent"
+										 HorizontalContentAlignment="Stretch"
+						 ItemsSource="{Binding Actions}"
+						 SelectedItem="{Binding SelectedAction}">
+					<controls:ActionsListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel />
+						</ItemsPanelTemplate>
+					</controls:ActionsListBox.ItemsPanel>
+				</controls:ActionsListBox>
+			</Grid>
+		</Border>
+	</Border>
+</Window>

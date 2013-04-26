@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D78A3E08-B284-464B-ADCA-70E6EC9861D4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Doit</RootNamespace>
+    <AssemblyName>Doit</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="interop.searchapi">
+      <HintPath>..\Lib\interop.searchapi.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.SHDocVw">
+      <HintPath>..\Lib\Interop.SHDocVw.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.Shell32">
+      <HintPath>..\Lib\Interop.Shell32.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Actions\ActionItem.cs" />
+    <Compile Include="ActionResults\ActionResult.cs" />
+    <Compile Include="ActionProviders\ApplicationActionProviders.cs" />
+    <Compile Include="ActionProviders\ClipboardFileActionProvider.cs" />
+    <Compile Include="Actions\DelegateAction.cs" />
+    <Compile Include="Infrastructure\ChangeVisibilityEventArgs.cs" />
+    <Compile Include="Infrastructure\ExecutionContext.cs" />
+    <Compile Include="ActionProviders\ExplorerFileActionProvider.cs" />
+    <Compile Include="Actions\FileAction.cs" />
+    <Compile Include="ActionResults\FileActionResult.cs" />
+    <Compile Include="ActionProviders\FindActionProvider.cs" />
+    <Compile Include="Actions\GoToAddressAction.cs" />
+    <Compile Include="ActionProviders\GoToAddressActionProvider.cs" />
+    <Compile Include="Actions\MailAction.cs" />
+    <Compile Include="ActionProviders\MailActionProvider.cs" />
+    <Compile Include="Actions\SearchWebAction.cs" />
+    <Compile Include="ActionProviders\SearchWebActionProvider.cs" />
+    <Compile Include="Actions\TextAction.cs" />
+    <Compile Include="Actions\ZipFileAction.cs" />
+    <Compile Include="ActionProviders\ZipFileActionProvider.cs" />
+    <Compile Include="Controls\ActionsListBox.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Native\HotKey .cs" />
+    <Compile Include="Native\IPersist.cs" />
+    <Compile Include="Native\SIIGBF.cs" />
+    <Compile Include="Native\IPersistFile.cs" />
+    <Compile Include="Native\IShellItemImageFactory.cs" />
+    <Compile Include="Native\IShellLinkW.cs" />
+    <Compile Include="Actions\RunApplicationAction.cs" />
+    <Compile Include="ActionProviders\RunApplicationActionProvider.cs" />
+    <Compile Include="Native\SIZE.cs" />
+    <Compile Include="Native\SLGP.cs" />
+    <Compile Include="Native\SLR.cs" />
+    <Compile Include="Native\STGM.cs" />
+    <Compile Include="Native\WIN32_FIND_DATAW.cs" />
+    <Compile Include="Native\NativeMethods.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Actions\IAction.cs" />
+    <Compile Include="ActionProviders\IActionProvider.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Bing32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Google32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Duck32.png" />
+    <Resource Include="Images\Wiki32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Quit32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\OpenViewInBrowser32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Return32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Return16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Files32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Mail32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Zip32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Imdb32.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
