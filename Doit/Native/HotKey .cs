@@ -17,6 +17,8 @@ namespace Doit.Native
 		
 		private bool _isKeyRegistered;
 
+		private bool _disposed;
+
 		public HotKey(ModifierKeys modifierKeys, Keys key, Window window)
 			: this(modifierKeys, key, new WindowInteropHelper(window))
 		{
@@ -38,13 +40,12 @@ namespace Doit.Native
 			KeyModifier = modifierKeys;
 			_id = GetHashCode();
 			_handle = windowHandle;
-			Register();
 			ComponentDispatcher.ThreadPreprocessMessage += ThreadPreprocessMessageMethod;
 		}
 
 		~HotKey()
 		{
-			Dispose();
+			Dispose(false);
 		}
 
 		public event Action<HotKey> HotKeyPressed;
@@ -53,11 +54,11 @@ namespace Doit.Native
 
 		public ModifierKeys KeyModifier { get; private set; }
 
-		public void Register()
+		public bool Register()
 		{
 			if (Key == Keys.None)
 			{
-				return;
+				return false;
 			}
 
 			if (_isKeyRegistered)
@@ -65,12 +66,7 @@ namespace Doit.Native
 				Unregister();
 			}
 
-			_isKeyRegistered = NativeMethods.RegisterHotKey(_handle, _id, KeyModifier, Key);
-
-			if (!_isKeyRegistered)
-			{
-				throw new ApplicationException("Hotkey already in use");
-			}
+			return NativeMethods.RegisterHotKey(_handle, _id, KeyModifier, Key);
 		}
 
 		public void Unregister()
@@ -80,8 +76,21 @@ namespace Doit.Native
 
 		public void Dispose()
 		{
-			ComponentDispatcher.ThreadPreprocessMessage -= ThreadPreprocessMessageMethod;
-			Unregister();
+			Dispose(true);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (!_disposed)
+			{
+				if (disposing)
+				{
+					ComponentDispatcher.ThreadPreprocessMessage -= ThreadPreprocessMessageMethod;
+				}
+
+				Unregister();
+				_disposed = true;
+			}
 		}
 
 		private void ThreadPreprocessMessageMethod(ref MSG msg, ref bool handled)

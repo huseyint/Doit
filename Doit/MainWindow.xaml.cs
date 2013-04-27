@@ -3,15 +3,11 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using Doit.Native;
 using Application = System.Windows.Application;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 namespace Doit
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
 	public partial class MainWindow
 	{
 		private readonly MainWindowViewModel _mainWindowViewModel;
@@ -42,27 +38,75 @@ namespace Doit
 
 			Left = (Screen.PrimaryScreen.Bounds.Width - Width) * 0.5;
 			Top = (Screen.PrimaryScreen.Bounds.Height - Height) * 0.2;
+		}
 
-			var hotkey = new HotKey(ModifierKeys.Alt, Keys.Space, this);
-			hotkey.HotKeyPressed += OnHotKeyPressed;
+		public void HideMe()
+		{
+			_mainWindowViewModel.Query = string.Empty;
+			_mainWindowViewModel.Actions.Clear();
+			_mainWindowViewModel.AccumulatedActions.Clear();
+
+			var duration = TimeSpan.FromMilliseconds(200d);
+
+			var doubleAnimation = new DoubleAnimation
+			{
+				Duration = duration,
+				To = 0d,
+				EasingFunction = new PowerEase { EasingMode = EasingMode.EaseOut }
+			};
+
+			Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath(OpacityProperty));
+
+			var objectAnimationUsingKeyFrames = new ObjectAnimationUsingKeyFrames();
+			objectAnimationUsingKeyFrames.KeyFrames.Add(new DiscreteObjectKeyFrame(Visibility.Hidden, KeyTime.FromTimeSpan(duration)));
+
+			Storyboard.SetTargetProperty(objectAnimationUsingKeyFrames, new PropertyPath(VisibilityProperty));
+
+			var storyboard = new Storyboard();
+			storyboard.Children.Add(doubleAnimation);
+			storyboard.Children.Add(objectAnimationUsingKeyFrames);
+
+			storyboard.Completed += (sender, args) => _mainWindowViewModel.Query = string.Empty;
+			storyboard.Begin(this);
+		}
+
+		public void ShowMe()
+		{
+			_mainWindowViewModel.UpdateLastActiveWindowHandle();
+
+			var duration = TimeSpan.FromMilliseconds(200d);
+
+			var doubleAnimation = new DoubleAnimation
+			{
+				Duration = duration,
+				To = 1d,
+				EasingFunction = new PowerEase { EasingMode = EasingMode.EaseIn }
+			};
+
+			Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath(OpacityProperty));
+
+			var objectAnimationUsingKeyFrames = new ObjectAnimationUsingKeyFrames();
+			objectAnimationUsingKeyFrames.KeyFrames.Add(new DiscreteObjectKeyFrame(Visibility.Visible, KeyTime.FromTimeSpan(TimeSpan.Zero)));
+
+			Storyboard.SetTargetProperty(objectAnimationUsingKeyFrames, new PropertyPath(VisibilityProperty));
+
+			var storyboard = new Storyboard();
+			storyboard.Children.Add(objectAnimationUsingKeyFrames);
+			storyboard.Children.Add(doubleAnimation);
+
+			storyboard.Completed += (sender, args) =>
+			{
+				Activate();
+				_mainWindowViewModel.UpdateActions();
+				InputBox.Focus();
+			};
+			storyboard.Begin(this);
 		}
 
 		protected override void OnChildDesiredSizeChanged(UIElement child)
 		{
 			AnimateWindowHeight();
 			base.OnChildDesiredSizeChanged(child);
-		}
-
-		private void OnHotKeyPressed(HotKey k)
-		{
-			if (IsVisible)
-			{
-				HideMe();
-			}
-			else
-			{
-				ShowMe();
-			}
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -192,69 +236,6 @@ namespace Doit
 			};
 
 			BeginAnimation(HeightProperty, heightAnimation);
-		}
-
-		private void HideMe()
-		{
-			_mainWindowViewModel.Query = string.Empty;
-			_mainWindowViewModel.Actions.Clear();
-			_mainWindowViewModel.AccumulatedActions.Clear();
-
-			var duration = TimeSpan.FromMilliseconds(200d);
-
-			var doubleAnimation = new DoubleAnimation
-			{
-				Duration = duration, 
-				To = 0d,
-				EasingFunction = new PowerEase { EasingMode = EasingMode.EaseOut }
-			};
-
-			Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath(OpacityProperty));
-
-			var objectAnimationUsingKeyFrames = new ObjectAnimationUsingKeyFrames();
-			objectAnimationUsingKeyFrames.KeyFrames.Add(new DiscreteObjectKeyFrame(Visibility.Hidden, KeyTime.FromTimeSpan(duration)));
-
-			Storyboard.SetTargetProperty(objectAnimationUsingKeyFrames, new PropertyPath(VisibilityProperty));
-
-			var storyboard = new Storyboard();
-			storyboard.Children.Add(doubleAnimation);
-			storyboard.Children.Add(objectAnimationUsingKeyFrames);
-
-			storyboard.Completed += (sender, args) => _mainWindowViewModel.Query = string.Empty;
-			storyboard.Begin(this);
-		}
-
-		private void ShowMe()
-		{
-			_mainWindowViewModel.UpdateLastActiveWindowHandle();
-
-			var duration = TimeSpan.FromMilliseconds(200d);
-
-			var doubleAnimation = new DoubleAnimation
-			{
-				Duration = duration,
-				To = 1d,
-				EasingFunction = new PowerEase { EasingMode = EasingMode.EaseIn }
-			};
-
-			Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath(OpacityProperty));
-
-			var objectAnimationUsingKeyFrames = new ObjectAnimationUsingKeyFrames();
-			objectAnimationUsingKeyFrames.KeyFrames.Add(new DiscreteObjectKeyFrame(Visibility.Visible, KeyTime.FromTimeSpan(TimeSpan.Zero)));
-
-			Storyboard.SetTargetProperty(objectAnimationUsingKeyFrames, new PropertyPath(VisibilityProperty));
-
-			var storyboard = new Storyboard();
-			storyboard.Children.Add(objectAnimationUsingKeyFrames);
-			storyboard.Children.Add(doubleAnimation);
-
-			storyboard.Completed += (sender, args) =>
-			{
-				Activate();
-				_mainWindowViewModel.UpdateActions();
-				InputBox.Focus();
-			};
-			storyboard.Begin(this);
 		}
 
 		private void MainWindow_OnPreviewKeyDown(object sender, KeyEventArgs e)
