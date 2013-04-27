@@ -52,6 +52,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Doit.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="interop.searchapi">
       <HintPath>..\Lib\interop.searchapi.dll</HintPath>
@@ -70,6 +73,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -82,10 +86,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    </Page>
     <Compile Include="Actions\ActionItem.cs" />
     <Compile Include="ActionResults\ActionResult.cs" />
     <Compile Include="ActionProviders\ApplicationActionProviders.cs" />
@@ -107,6 +111,7 @@
     <Compile Include="Actions\ZipFileAction.cs" />
     <Compile Include="ActionProviders\ZipFileActionProvider.cs" />
     <Compile Include="Controls\ActionsListBox.cs" />
+    <Compile Include="Infrastructure\ISingleInstanceApp.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Native\HotKey .cs" />
     <Compile Include="Native\IPersist.cs" />
@@ -122,6 +127,7 @@
     <Compile Include="Native\STGM.cs" />
     <Compile Include="Native\WIN32_FIND_DATAW.cs" />
     <Compile Include="Native\NativeMethods.cs" />
+    <Compile Include="Infrastructure\SingleInstance.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

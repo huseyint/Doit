@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
@@ -35,6 +36,45 @@ namespace Doit.Native
 
 		[DllImport("user32.dll", SetLastError = true)]
 		public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+		[DllImport("shell32.dll", EntryPoint = "CommandLineToArgvW", CharSet = CharSet.Unicode)]
+		public static extern IntPtr _CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string cmdLine, out int numArgs);
+
+		[DllImport("kernel32.dll", EntryPoint = "LocalFree", SetLastError = true)]
+		public static extern IntPtr _LocalFree(IntPtr hMem);
+
+		public static string[] CommandLineToArgvW(string cmdLine)
+		{
+			var argv = IntPtr.Zero;
+
+			try
+			{
+				int numArgs;
+
+				argv = _CommandLineToArgvW(cmdLine, out numArgs);
+				if (argv == IntPtr.Zero)
+				{
+					throw new Win32Exception();
+				}
+
+				var result = new string[numArgs];
+
+				for (int i = 0; i < numArgs; i++)
+				{
+					IntPtr currArg = Marshal.ReadIntPtr(argv, i * Marshal.SizeOf(typeof(IntPtr)));
+					result[i] = Marshal.PtrToStringUni(currArg);
+				}
+
+				return result;
+			}
+			finally
+			{
+				var p = _LocalFree(argv);
+
+				// Otherwise LocalFree failed.
+				////Assert.AreEqual(IntPtr.Zero, p);
+			}
+		}
 
 		public static ImageSource GetShortcutIcon(string path)
 		{
