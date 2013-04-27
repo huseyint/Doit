@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Doit.Native;
+using Application = System.Windows.Application;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 namespace Doit
@@ -41,6 +42,9 @@ namespace Doit
 
 			Left = (Screen.PrimaryScreen.Bounds.Width - Width) * 0.5;
 			Top = (Screen.PrimaryScreen.Bounds.Height - Height) * 0.2;
+
+			var hotkey = new HotKey(ModifierKeys.Alt, Keys.Space, this);
+			hotkey.HotKeyPressed += OnHotKeyPressed;
 		}
 
 		protected override void OnChildDesiredSizeChanged(UIElement child)
@@ -49,24 +53,30 @@ namespace Doit
 			base.OnChildDesiredSizeChanged(child);
 		}
 
+		private void OnHotKeyPressed(HotKey k)
+		{
+			if (IsVisible)
+			{
+				HideMe();
+			}
+			else
+			{
+				ShowMe();
+			}
+		}
+
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			var _hotkey = new HotKey(ModifierKeys.Alt, Keys.Space, this);
-			_hotkey.HotKeyPressed += k =>
+			if (((App)Application.Current).StartHidden)
 			{
-				if (IsVisible)
-				{
-					HideMe();
-				}
-				else
-				{
-					ShowMe();
-				}
-			};
-
-			// Set the window height for first time with animation
-			////AnimateWindowHeight();
-			ShowMe();
+				HideMe();
+			}
+			else
+			{
+				// Set the window height for first time with animation
+				////AnimateWindowHeight();
+				ShowMe();
+			}
 		}
 
 		private void InputBox_OnPreviewKeyDown(object sender, KeyEventArgs e)
