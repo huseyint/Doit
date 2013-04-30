@@ -12,6 +12,11 @@ namespace Doit.ActionProviders
 
 		public IEnumerable<FileAction> Offer(string query)
 		{
+			if (!string.IsNullOrEmpty(query))
+			{
+				yield break;
+			}
+
 			var fileDropList = Clipboard.GetFileDropList();
 
 			if (fileDropList.Count == 1)

@@ -59,6 +59,7 @@ namespace Doit
 				new MailActionProvider(),
 				new ExplorerFileActionProvider(),
 				new ClipboardFileActionProvider(),
+				new ClipboardTextActionProvider(),
 			};
 
 			_consumableTypeMap = new Dictionary<Type, IList<IActionProvider<IAction>>>();

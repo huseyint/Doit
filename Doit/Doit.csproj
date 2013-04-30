@@ -90,6 +90,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="ActionProviders\ClipboardTextActionProvider.cs" />
+    <Compile Include="ActionResults\TextActionResult.cs" />
     <Compile Include="Actions\ActionItem.cs" />
     <Compile Include="ActionResults\ActionResult.cs" />
     <Compile Include="ActionProviders\ApplicationActionProviders.cs" />
@@ -181,6 +183,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Imdb32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Text32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
