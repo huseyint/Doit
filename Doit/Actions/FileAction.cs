@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -22,6 +23,11 @@ namespace Doit.Actions
 
 		public FileAction(string path)
 		{
+			if (!IsValidFile(path))
+			{
+				throw new ArgumentException("Invalid file path.", "path");
+			}
+
 			_path = path;
 
 			if (_path != null)
@@ -44,6 +50,11 @@ namespace Doit.Actions
 
 		public FileAction(string[] paths)
 		{
+			if (paths.Any(p => !IsValidFile(p)))
+			{
+				throw new ArgumentException("Invalid file path exists.", "paths");
+			}
+
 			_paths = paths;
 
 			_icon = new BitmapImage(new Uri("pack://application:,,,/Images/Files32.png"));
@@ -96,6 +107,11 @@ namespace Doit.Actions
 		public override string ToString()
 		{
 			return Text;
+		}
+
+		private static bool IsValidFile(string path)
+		{
+			return File.Exists(path);
 		}
 	}
 }

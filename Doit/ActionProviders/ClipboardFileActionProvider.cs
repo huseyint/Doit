@@ -16,7 +16,17 @@ namespace Doit.ActionProviders
 
 			if (fileDropList.Count == 1)
 			{
-				yield return new FileAction(fileDropList[0]) { Hint = "On clipboard" };
+				FileAction fileAction = null;
+
+				try
+				{
+					fileAction = new FileAction(fileDropList[0]) { Hint = "On clipboard" };
+				}
+				catch (ArgumentException)
+				{
+				}
+
+				yield return fileAction;
 			}
 
 			if (fileDropList.Count > 1)

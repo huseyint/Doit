@@ -167,6 +167,7 @@ namespace Doit
 			{
 				actions = _actionProviders
 					.SelectMany(ap => ap.Offer(Query))
+					.Where(a => a != null)
 					.Take(10)
 					.ToArray();
 			}

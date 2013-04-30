@@ -31,7 +31,17 @@ namespace Doit.ActionProviders
 
 			if (desktopFiles.Length == 1)
 			{
-				yield return new FileAction(desktopFiles[0]) { Hint = "On desktop" };
+				FileAction fileAction = null;
+
+				try
+				{
+					fileAction = new FileAction(desktopFiles[0]) { Hint = "On desktop" };
+				}
+				catch (ArgumentException)
+				{
+				}
+
+				yield return fileAction;
 			}
 
 			if (desktopFiles.Length > 1)
@@ -45,18 +55,44 @@ namespace Doit.ActionProviders
 
 				if (activeWindow != null)
 				{
-					var hint = string.Format("At '{0}' folder", new DirectoryInfo(new Uri(activeWindow.LocationURL).LocalPath).Name);
+					var hint = string.Empty;
+					Uri uri;
+
+					if (Uri.TryCreate(activeWindow.LocationURL, UriKind.Absolute, out uri))
+					{
+						hint = string.Format("At '{0}' folder", new DirectoryInfo(uri.LocalPath).Name);
+					}
 
 					var activeWindowFiles = GetSelectedFiles(activeWindow).ToArray();
 
 					if (activeWindowFiles.Length == 1)
 					{
-						yield return new FileAction(activeWindowFiles[0]) { Hint = hint };
+						FileAction fileAction = null;
+
+						try
+						{
+							fileAction = new FileAction(activeWindowFiles[0]) { Hint = hint };
+						}
+						catch (ArgumentException)
+						{
+						}
+
+						yield return fileAction;
 					}
 
 					if (activeWindowFiles.Length > 1)
 					{
-						yield return new FileAction(activeWindowFiles) { Hint = hint };
+						FileAction fileAction = null;
+
+						try
+						{
+							fileAction = new FileAction(activeWindowFiles) { Hint = hint };
+						}
+						catch (ArgumentException)
+						{
+						}
+
+						yield return fileAction;
 					}
 				}
 			}
@@ -69,14 +105,14 @@ namespace Doit.ActionProviders
 
 		private static IEnumerable<string> GetSelectedFiles(InternetExplorer window)
 		{
-			if (window == null || Path.GetFileNameWithoutExtension(window.FullName).ToLower().ToLowerInvariant() != "explorer")
+			if (window == null || !string.Equals(Path.GetFileNameWithoutExtension(window.FullName), "explorer", StringComparison.InvariantCultureIgnoreCase))
 			{
 				return Enumerable.Empty<string>();
 			}
 			
 			var items = ((IShellFolderViewDual2)window.Document).SelectedItems();
 
-			return items.OfType<FolderItem>().Select(i => i.Path);
+			return items.OfType<FolderItem>().Where(i => i.IsFileSystem).Select(i => i.Path);
 		}
 	}
 }
