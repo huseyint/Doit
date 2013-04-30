@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Windows.Media;
 using Doit.Infrastructure;
@@ -28,6 +29,11 @@ namespace Doit.Actions
 		}
 
 		public ImageSource Icon { get; set; }
+
+		public Type ResultType
+		{
+			get { return typeof(ActionResult); }
+		}
 
 		public ActionResult Execute(ExecutionContext context)
 		{

@@ -7,30 +7,36 @@ using Doit.Infrastructure;
 
 namespace Doit.Actions
 {
-	public class ZipFileAction : FileAction
+	public class ZipFileAction : IAction
 	{
-		private string _text;
+		private static readonly BitmapSource _icon;
 
-		public ZipFileAction(string path)
-			: base(path)
+		static ZipFileAction()
 		{
-			_text = "ZIP file";
 			_icon = new BitmapImage(new Uri("pack://application:,,,/Images/Zip32.png"));
-
-			Hint = "ZIPs the selected file(s)";
 		}
 
-		public override string Text
+		public string Text
 		{
-			get { return _text; }
+			get { return "ZIP file"; }
 		}
 
-		public override ImageSource Icon
+		public ImageSource Icon
 		{
 			get { return _icon; }
 		}
 
-		public override ActionResult Execute(ExecutionContext context)
+		public string Hint
+		{
+			get { return "ZIPs the selected file(s)"; }
+		}
+
+		public Type ResultType
+		{
+			get { return typeof(FileActionResult); }
+		}
+
+		public ActionResult Execute(ExecutionContext context)
 		{
 			var fileActionResult = (FileActionResult)context.LastActionResult;
 
@@ -57,7 +63,7 @@ namespace Doit.Actions
 
 		public override string ToString()
 		{
-			return "ZIP files";
+			return Text;
 		}
 	}
 }

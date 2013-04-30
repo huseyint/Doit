@@ -60,6 +60,11 @@ namespace Doit.Actions
 			_icon = new BitmapImage(new Uri("pack://application:,,,/Images/Files32.png"));
 		}
 
+		public Type ResultType
+		{
+			get { return typeof(FileActionResult); }
+		}
+
 		public virtual string Text
 		{
 			get

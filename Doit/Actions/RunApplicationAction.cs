@@ -45,6 +45,11 @@ namespace Doit.Actions
 			}
 		}
 
+		public Type ResultType
+		{
+			get { return typeof(ActionResult); }
+		}
+
 		public ActionResult Execute(ExecutionContext context)
 		{
 			try

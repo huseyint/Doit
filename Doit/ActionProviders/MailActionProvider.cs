@@ -7,7 +7,7 @@ namespace Doit.ActionProviders
 {
 	public class MailActionProvider : IActionProvider<MailAction>
 	{
-		private readonly ICollection<Type> _canConsume = new[] { typeof(FileAction), typeof(TextAction) };
+		private readonly ICollection<Type> _canConsume = new[] { typeof(FileActionResult), typeof(TextActionResult) };
 
 		public ICollection<Type> CanConsume
 		{

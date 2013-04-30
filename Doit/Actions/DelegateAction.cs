@@ -17,6 +17,11 @@ namespace Doit.Actions
 		
 		public string Hint { get; set; }
 
+		public Type ResultType
+		{
+			get { return typeof(ActionResult); }
+		}
+
 		public ImageSource Icon { get; set; }
 
 		public ActionResult Execute(ExecutionContext context)

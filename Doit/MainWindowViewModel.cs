@@ -180,7 +180,7 @@ namespace Doit
 
 				foreach (var map in _consumableTypeMap)
 				{
-					if (map.Key.IsInstanceOfType(lastAccumulatedAction))
+					if (map.Key.IsAssignableFrom(lastAccumulatedAction.ResultType))
 					{
 						foreach (var action in map.Value.SelectMany(ap => ap.Offer(lastAccumulatedAction)))
 						{

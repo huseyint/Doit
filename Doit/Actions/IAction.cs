@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
 using Doit.Infrastructure;
 
 namespace Doit.Actions
@@ -10,6 +11,8 @@ namespace Doit.Actions
 		string Hint { get; }
 
 		ImageSource Icon { get; }
+
+		Type ResultType { get; }
 
 		ActionResult Execute(ExecutionContext context);
 	}

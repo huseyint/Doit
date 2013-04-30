@@ -30,6 +30,11 @@ namespace Doit.Actions
 			get { return _icon; }
 		}
 
+		public Type ResultType
+		{
+			get { return typeof(ActionResult); }
+		}
+
 		public ActionResult Execute(ExecutionContext context)
 		{
 			// http://kb.mozillazine.org/Command_line_arguments_(Thunderbird)

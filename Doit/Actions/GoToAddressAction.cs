@@ -33,6 +33,11 @@ namespace Doit.Actions
 			get { return _icon; }
 		}
 
+		public Type ResultType
+		{
+			get { return typeof(ActionResult); }
+		}
+
 		public ActionResult Execute(ExecutionContext context)
 		{
 			Process.Start(_uri.AbsoluteUri);

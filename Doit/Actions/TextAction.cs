@@ -60,6 +60,11 @@ namespace Doit.Actions
 			get { return _icon; }
 		}
 
+		public Type ResultType
+		{
+			get { return typeof(TextActionResult); }
+		}
+
 		public ActionResult Execute(ExecutionContext context)
 		{
 			if (context.HasNextAction)

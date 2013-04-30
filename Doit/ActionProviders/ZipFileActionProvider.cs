@@ -7,7 +7,7 @@ namespace Doit.ActionProviders
 {
 	public class ZipFileActionProvider : IActionProvider<ZipFileAction>
 	{
-		private readonly ICollection<Type> _canConsume = new[] { typeof(FileAction) };
+		private readonly ICollection<Type> _canConsume = new[] { typeof(FileActionResult) };
 
 		public ICollection<Type> CanConsume
 		{
@@ -21,7 +21,7 @@ namespace Doit.ActionProviders
 
 		public IEnumerable<ZipFileAction> Offer(IAction action)
 		{
-			yield return new ZipFileAction(null);
+			yield return new ZipFileAction();
 		}
 	}
 }
