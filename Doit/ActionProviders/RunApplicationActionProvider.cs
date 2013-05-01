@@ -6,11 +6,11 @@ using Doit.Actions;
 
 namespace Doit.ActionProviders
 {
-	public class RunApplicationActionProvider : IActionProvider<RunApplicationAction>
+	public class RunApplicationActionProvider : SingleParameterActionProvider<RunApplicationAction>
 	{
 		private readonly RunApplicationAction[] _actions;
 
-		public RunApplicationActionProvider()
+		public RunApplicationActionProvider() : base("run")
 		{
 			var searchFolders = new[]
 			{
@@ -27,23 +27,14 @@ namespace Doit.ActionProviders
 				.ToArray();
 		}
 
-		public ICollection<Type> CanConsume { get; private set; }
-
-		public IEnumerable<RunApplicationAction> Offer(string query)
+		protected override IEnumerable<RunApplicationAction> OfferCore(string parameter)
 		{
-			if (string.IsNullOrWhiteSpace(query))
+			if (string.IsNullOrWhiteSpace(parameter))
 			{
 				return Enumerable.Empty<RunApplicationAction>();
 			}
 
-			var queryLower = query.ToLowerInvariant();
-
-			return _actions.Where(a => a.Text.ToLowerInvariant().Contains(queryLower));
-		}
-
-		public IEnumerable<RunApplicationAction> Offer(IAction action)
-		{
-			throw new NotImplementedException();
+			return _actions.Where(a => a.Text.ToLowerInvariant().Contains(parameter.ToLowerInvariant()));
 		}
 	}
 }

@@ -14,6 +14,8 @@ namespace Doit.ActionProviders
 			get { return _canConsume; }
 		}
 
+		public bool IsFallback { get; set; }
+
 		public IEnumerable<ZipFileAction> Offer(string query)
 		{
 			return Enumerable.Empty<ZipFileAction>();

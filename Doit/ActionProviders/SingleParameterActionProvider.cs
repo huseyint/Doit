@@ -16,6 +16,8 @@ namespace Doit.ActionProviders
 
 		public virtual ICollection<Type> CanConsume { get; private set; }
 
+		public bool IsFallback { get; set; }
+
 		public virtual IEnumerable<T> Offer(string query)
 		{
 			if (query != null && query.StartsWith(_command, StringComparison.InvariantCultureIgnoreCase))
@@ -29,6 +31,11 @@ namespace Doit.ActionProviders
 				{
 					return OfferCore(query.Substring(_command.Length + 1));
 				}
+			}
+
+			if (IsFallback)
+			{
+				return OfferCore(query);
 			}
 
 			return Enumerable.Empty<T>();

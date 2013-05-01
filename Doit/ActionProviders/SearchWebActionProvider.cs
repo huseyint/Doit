@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Media;
 using Doit.Actions;
 
@@ -20,6 +21,11 @@ namespace Doit.ActionProviders
 
 		protected override IEnumerable<SearchWebAction> OfferCore(string parameter)
 		{
+			if (string.IsNullOrEmpty(parameter))
+			{
+				return Enumerable.Empty<SearchWebAction>();
+			}
+
 			return new[] { new SearchWebAction(_template, parameter, _name) { Icon = Icon } };
 		}
 	}

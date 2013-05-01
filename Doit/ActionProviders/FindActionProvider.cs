@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
+using System.Linq;
 using Doit.Actions;
 using SearchAPI;
 
@@ -16,7 +17,17 @@ namespace Doit.ActionProviders
 		{
 			if (!string.IsNullOrEmpty(parameter))
 			{
-				foreach (var path in FindFiles(parameter))
+				var files = new string[0];
+
+				try
+				{
+					files = FindFiles(parameter).ToArray();
+				}
+				catch (Exception)
+				{
+				}
+
+				foreach (var path in files)
 				{
 					yield return new FileAction(path);
 				}

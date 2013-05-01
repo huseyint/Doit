@@ -10,6 +10,8 @@ namespace Doit.ActionProviders
 	{
 		public ICollection<Type> CanConsume { get; private set; }
 		
+		public bool IsFallback { get; set; }
+
 		public IEnumerable<TextAction> Offer(string query)
 		{
 			if (!string.IsNullOrEmpty(query))

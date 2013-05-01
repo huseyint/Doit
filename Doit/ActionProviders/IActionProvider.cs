@@ -8,6 +8,8 @@ namespace Doit.ActionProviders
 	{
 		ICollection<Type> CanConsume { get; }
 
+		bool IsFallback { get; set; }
+
 		IEnumerable<T> Offer(string query);
 
 		IEnumerable<T> Offer(IAction action);

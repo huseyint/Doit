@@ -21,6 +21,8 @@ namespace Doit.ActionProviders
 
 		public ICollection<Type> CanConsume { get; private set; }
 
+		public bool IsFallback { get; set; }
+
 		public IEnumerable<DelegateAction> Offer(string query)
 		{
 			DelegateAction delegateAction;

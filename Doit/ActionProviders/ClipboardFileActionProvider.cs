@@ -9,6 +9,8 @@ namespace Doit.ActionProviders
 	public class ClipboardFileActionProvider : IActionProvider<FileAction>
 	{
 		public ICollection<Type> CanConsume { get; private set; }
+		
+		public bool IsFallback { get; set; }
 
 		public IEnumerable<FileAction> Offer(string query)
 		{

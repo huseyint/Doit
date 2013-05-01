@@ -47,10 +47,10 @@ namespace Doit
 			_actionProviders = new IActionProvider<IAction>[]
 			{
 				new ApplicationActionProviders(),
-				new RunApplicationActionProvider(),
-				new FindActionProvider(),
+				new RunApplicationActionProvider { IsFallback = true },
+				new FindActionProvider { IsFallback = true },
 				new GoToAddressActionProvider(),
-				new SearchWebActionProvider("Google", "https://www.google.com/search?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Google32.png")) },
+				new SearchWebActionProvider("Google", "https://www.google.com/search?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Google32.png")), IsFallback = true },
 				new SearchWebActionProvider("Bing", "http://www.bing.com/search?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Bing32.png")) },
 				new SearchWebActionProvider("Duck", "https://duckduckgo.com/?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Duck32.png")) },
 				new SearchWebActionProvider("Wiki", "http://en.wikipedia.org/wiki/Special:Search?search={0}&go=Go") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Wiki32.png")) },
