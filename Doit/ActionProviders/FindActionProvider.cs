@@ -53,7 +53,7 @@ namespace Doit.ActionProviders
 			queryHelper.QueryMaxResults = 10;
 
 			// Set list of columns we want
-			queryHelper.QuerySelectColumns = "System.ItemPathDisplay";
+			queryHelper.QuerySelectColumns = "System.ItemUrl";
 
 			// Set additional query restriction
 			queryHelper.QueryWhereRestrictions = "AND scope='file:'";
@@ -97,9 +97,12 @@ namespace Doit.ActionProviders
 					{
 						while (results.Read())
 						{
-							// col 0 is our path in display format
-							// Console.WriteLine("{0}", WDSResults.GetString(0));
-							yield return results.GetString(0);
+							var url = results.GetString(0);
+
+							if (url.StartsWith("file:", StringComparison.InvariantCultureIgnoreCase))
+							{
+								yield return url.Substring(5).Replace('/', '\\');
+							}
 						}
 					}
 				}
