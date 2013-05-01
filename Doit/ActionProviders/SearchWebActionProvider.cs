@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Windows.Media;
 using Doit.Actions;
 
 namespace Doit.ActionProviders
 {
-	public class SearchWebActionProvider : IActionProvider<SearchWebAction>
+	public class SearchWebActionProvider : SingleParameterActionProvider<SearchWebAction>
 	{
 		private readonly string _name;
+
 		private readonly string _template;
 
-		public SearchWebActionProvider(string name, string template)
+		public SearchWebActionProvider(string name, string template) : base(name)
 		{
 			_name = name;
 			_template = template;
@@ -19,28 +18,9 @@ namespace Doit.ActionProviders
 
 		public ImageSource Icon { get; set; }
 
-		public ICollection<Type> CanConsume { get; private set; }
-
-		public IEnumerable<SearchWebAction> Offer(string query)
+		protected override IEnumerable<SearchWebAction> OfferCore(string parameter)
 		{
-			if (query != null)
-			{
-				var command = _name.ToLowerInvariant() + " ";
-
-				if (query.StartsWith(command))
-				{
-					var text = query.Substring(command.Length);
-
-					return new[] { new SearchWebAction(_template, text, _name) { Icon = Icon } };
-				}
-			}
-
-			return Enumerable.Empty<SearchWebAction>();
-		}
-
-		public IEnumerable<SearchWebAction> Offer(IAction action)
-		{
-			throw new NotImplementedException();
+			return new[] { new SearchWebAction(_template, parameter, _name) { Icon = Icon } };
 		}
 	}
 }

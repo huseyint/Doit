@@ -5,34 +5,26 @@ using Doit.Actions;
 
 namespace Doit.ActionProviders
 {
-	public class GoToAddressActionProvider : IActionProvider<GoToAddressAction>
+	public class GoToAddressActionProvider : SingleParameterActionProvider<GoToAddressAction>
 	{
-		public ICollection<Type> CanConsume { get; private set; }
-
-		public IEnumerable<GoToAddressAction> Offer(string query)
+		public GoToAddressActionProvider() : base("go")
 		{
-			if (query != null && query.StartsWith("go ", StringComparison.InvariantCultureIgnoreCase))
+		}
+
+		protected override IEnumerable<GoToAddressAction> OfferCore(string parameter)
+		{
+			if (!parameter.StartsWith("http"))
 			{
-				var address = query.Substring(3);
+				parameter = "http://" + parameter;
+			}
 
-				if (!address.StartsWith("http"))
-				{
-					address = "http://" + address;
-				}
-
-				Uri uri;
-				if (Uri.TryCreate(address, UriKind.Absolute, out uri))
-				{
-					return new[] { new GoToAddressAction(uri) };
-				}
+			Uri uri;
+			if (Uri.TryCreate(parameter, UriKind.Absolute, out uri))
+			{
+				return new[] { new GoToAddressAction(uri) };
 			}
 
 			return Enumerable.Empty<GoToAddressAction>();
-		}
-
-		public IEnumerable<GoToAddressAction> Offer(IAction action)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

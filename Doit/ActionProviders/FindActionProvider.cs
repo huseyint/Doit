@@ -6,34 +6,21 @@ using SearchAPI;
 
 namespace Doit.ActionProviders
 {
-	public class FindActionProvider : IActionProvider<FileAction>
+	public class FindActionProvider : SingleParameterActionProvider<FileAction>
 	{
-		public ICollection<Type> CanConsume { get; private set; }
-
-		public IEnumerable<FileAction> Offer(string query)
+		public FindActionProvider() : base("find")
 		{
-			if (query != null)
-			{
-				var command = "find ";
-
-				if (query.StartsWith(command))
-				{
-					var text = query.Substring(command.Length);
-
-					if (!string.IsNullOrEmpty(text))
-					{
-						foreach (var path in FindFiles(text))
-						{
-							yield return new FileAction(path);
-						}
-					}
-				}
-			}
 		}
 
-		public IEnumerable<FileAction> Offer(IAction action)
+		protected override IEnumerable<FileAction> OfferCore(string parameter)
 		{
-			throw new NotImplementedException();
+			if (!string.IsNullOrEmpty(parameter))
+			{
+				foreach (var path in FindFiles(parameter))
+				{
+					yield return new FileAction(path);
+				}
+			}
 		}
 
 		private IEnumerable<string> FindFiles(string pattern)

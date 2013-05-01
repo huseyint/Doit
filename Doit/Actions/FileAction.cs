@@ -116,7 +116,7 @@ namespace Doit.Actions
 
 		private static bool IsValidFile(string path)
 		{
-			return File.Exists(path);
+			return File.Exists(path) || Directory.Exists(path);
 		}
 	}
 }
