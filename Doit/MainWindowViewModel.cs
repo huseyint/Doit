@@ -273,6 +273,14 @@ namespace Doit
 			}
 		}
 
+		public void ExecuteSelectedAction()
+		{
+			if (SelectedAction != null)
+			{
+				ExecuteAction(SelectedAction.Action);
+			}
+		}
+
 		public void UpdateLastActiveWindowHandle()
 		{
 			_lastActiveWindowHandle = NativeMethods.GetForegroundWindow();

@@ -157,7 +157,8 @@
 						 Background="Transparent"
 										 HorizontalContentAlignment="Stretch"
 						 ItemsSource="{Binding Actions}"
-						 SelectedItem="{Binding SelectedAction}">
+						 SelectedItem="{Binding SelectedAction}"
+										 PreviewMouseLeftButtonUp="ActionsListBoxOnPreviewMouseLeftButtonUp">
 					<controls:ActionsListBox.ItemsPanel>
 						<ItemsPanelTemplate>
 							<StackPanel />

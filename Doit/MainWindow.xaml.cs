@@ -135,7 +135,7 @@ namespace Doit
 				{
 					if ((e.KeyStates & KeyStates.Down) == KeyStates.Down)
 					{
-						_mainWindowViewModel.ExecuteAction(_mainWindowViewModel.SelectedAction.Action);
+						_mainWindowViewModel.ExecuteSelectedAction();
 					}
 				}
 
@@ -271,6 +271,11 @@ namespace Doit
 			{
 				_altKeyPressed = false;
 			}
+		}
+
+		private void ActionsListBoxOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			_mainWindowViewModel.ExecuteSelectedAction();
 		}
 	}
 }
