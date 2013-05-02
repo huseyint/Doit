@@ -68,6 +68,9 @@
       <HintPath>..\Lib\Interop.Shell32.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="NCalc">
+      <HintPath>..\Lib\NCalc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -90,6 +93,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="ActionProviders\CalculatorActionProvider.cs" />
     <Compile Include="ActionProviders\ClipboardTextActionProvider.cs" />
     <Compile Include="ActionProviders\SingleParameterActionProvider.cs" />
     <Compile Include="ActionResults\TextActionResult.cs" />
@@ -97,6 +101,7 @@
     <Compile Include="ActionResults\ActionResult.cs" />
     <Compile Include="ActionProviders\ApplicationActionProviders.cs" />
     <Compile Include="ActionProviders\ClipboardFileActionProvider.cs" />
+    <Compile Include="Actions\CalculationAction.cs" />
     <Compile Include="Actions\DelegateAction.cs" />
     <Compile Include="Infrastructure\ChangeVisibilityEventArgs.cs" />
     <Compile Include="Infrastructure\ExecutionContext.cs" />
@@ -187,6 +192,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Text32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Calculate32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

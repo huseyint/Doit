@@ -60,6 +60,7 @@ namespace Doit
 				new ExplorerFileActionProvider(),
 				new ClipboardFileActionProvider(),
 				new ClipboardTextActionProvider(),
+				new CalculatorActionProvider { IsFallback = true },
 			};
 
 			_consumableTypeMap = new Dictionary<Type, IList<IActionProvider<IAction>>>();
