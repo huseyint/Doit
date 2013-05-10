@@ -27,7 +27,7 @@ namespace Doit.ActionProviders
 			}
 		}
 
-		public IEnumerable<TextAction> Offer(IAction action)
+		public IEnumerable<TextAction> Offer(IAction action, string query)
 		{
 			return Enumerable.Empty<TextAction>();
 		}

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using Doit.ActionResults;
 using Doit.Actions;
 using NCalc;
 
@@ -12,11 +14,28 @@ namespace Doit.ActionProviders
 		{
 		}
 
+		public override ICollection<Type> CanConsume
+		{
+			get { return new[] { typeof(NumberResult) }; }
+		}
+
+		public override IEnumerable<CalculationAction> Offer(IAction action, string query)
+		{
+			var calculationAction = action as CalculationAction;
+
+			return CalculateCore(calculationAction.Value.ToString(CultureInfo.InvariantCulture) + query);
+		}
+
 		protected override IEnumerable<CalculationAction> OfferCore(string parameter)
+		{
+			return CalculateCore(parameter);
+		}
+
+		private IEnumerable<CalculationAction> CalculateCore(string query)
 		{
 			try
 			{
-				var expression = new Expression(parameter, EvaluateOptions.IgnoreCase);
+				var expression = new Expression(query, EvaluateOptions.IgnoreCase);
 				var result = expression.Evaluate();
 
 				double value;

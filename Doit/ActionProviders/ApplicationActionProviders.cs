@@ -35,7 +35,7 @@ namespace Doit.ActionProviders
 			return Enumerable.Empty<DelegateAction>();
 		}
 
-		public IEnumerable<DelegateAction> Offer(IAction action)
+		public IEnumerable<DelegateAction> Offer(IAction action, string query)
 		{
 			throw new NotImplementedException();
 		}

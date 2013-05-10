@@ -21,7 +21,7 @@ namespace Doit.ActionProviders
 			return Enumerable.Empty<MailAction>();
 		}
 
-		public IEnumerable<MailAction> Offer(IAction action)
+		public IEnumerable<MailAction> Offer(IAction action, string query)
 		{
 			yield return new MailAction();
 		}

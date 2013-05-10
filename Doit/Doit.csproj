@@ -92,6 +92,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionResults\NumberResult.cs" />
     <Compile Include="Infrastructure\DelegateCommand.cs" />
     <Compile Include="Settings\ApplicationLauncherSettings.cs" />
     <Compile Include="Settings\ApplicationLauncherSettingsSection.cs" />

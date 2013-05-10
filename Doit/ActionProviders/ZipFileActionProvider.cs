@@ -21,7 +21,7 @@ namespace Doit.ActionProviders
 			return Enumerable.Empty<ZipFileAction>();
 		}
 
-		public IEnumerable<ZipFileAction> Offer(IAction action)
+		public IEnumerable<ZipFileAction> Offer(IAction action, string query)
 		{
 			yield return new ZipFileAction();
 		}

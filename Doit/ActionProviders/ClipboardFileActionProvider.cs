@@ -42,7 +42,7 @@ namespace Doit.ActionProviders
 			}
 		}
 
-		public IEnumerable<FileAction> Offer(IAction action)
+		public IEnumerable<FileAction> Offer(IAction action, string query)
 		{
 			return Enumerable.Empty<FileAction>();
 		}

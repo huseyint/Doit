@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Doit.ActionResults;
 using Doit.Infrastructure;
 
 namespace Doit.Actions
@@ -33,11 +34,19 @@ namespace Doit.Actions
 			get { return _icon; }
 		}
 		
-		public Type ResultType { get; private set; }
+		public Type ResultType
+		{
+			get { return typeof(NumberResult); }
+		}
+
+		public double Value
+		{
+			get { return _value; }
+		}
 
 		public ActionResult Execute(ExecutionContext context)
 		{
-			return ActionResult.PreventHide;
+			return new NumberResult { Value = _value };
 		}
 
 		public override string ToString()

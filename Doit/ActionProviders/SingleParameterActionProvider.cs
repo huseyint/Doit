@@ -41,7 +41,7 @@ namespace Doit.ActionProviders
 			return Enumerable.Empty<T>();
 		}
 
-		public virtual IEnumerable<T> Offer(IAction action)
+		public virtual IEnumerable<T> Offer(IAction action, string query)
 		{
 			return Enumerable.Empty<T>();
 		}

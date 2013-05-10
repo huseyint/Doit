@@ -12,6 +12,6 @@ namespace Doit.ActionProviders
 
 		IEnumerable<T> Offer(string query);
 
-		IEnumerable<T> Offer(IAction action);
+		IEnumerable<T> Offer(IAction action, string query);
 	}
 }

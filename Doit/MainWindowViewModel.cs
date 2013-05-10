@@ -149,7 +149,7 @@ namespace Doit
 				{
 					if (map.Key.IsAssignableFrom(lastAccumulatedAction.ResultType))
 					{
-						foreach (var action in map.Value.SelectMany(ap => ap.Offer(lastAccumulatedAction)))
+						foreach (var action in map.Value.SelectMany(ap => ap.Offer(lastAccumulatedAction, Query)))
 						{
 							nextActions.Add(action);
 						}
