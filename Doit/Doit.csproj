@@ -71,6 +71,9 @@
     <Reference Include="NCalc">
       <HintPath>..\Lib\NCalc.dll</HintPath>
     </Reference>
+    <Reference Include="Ookii.Dialogs.Wpf">
+      <HintPath>..\Lib\Ookii.Dialogs.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -89,6 +92,22 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\DelegateCommand.cs" />
+    <Compile Include="Settings\ApplicationLauncherSettings.cs" />
+    <Compile Include="Settings\ApplicationLauncherSettingsSection.cs" />
+    <Compile Include="Settings\ApplicationLauncherSettingsSectionView.xaml.cs">
+      <DependentUpon>ApplicationLauncherSettingsSectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\GeneralSettings.cs" />
+    <Compile Include="Settings\GeneralSettingsSection.cs" />
+    <Compile Include="Settings\GeneralSettingsSectionView.xaml.cs">
+      <DependentUpon>GeneralSettingsSectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\ISettingsSection.cs" />
+    <Compile Include="Settings\SettingsData.cs" />
+    <Compile Include="Settings\SettingsDialog.xaml.cs">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
+    </Compile>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -150,6 +169,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Settings\ApplicationLauncherSettingsSectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings\GeneralSettingsSectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings\SettingsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs">
@@ -195,6 +226,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Calculate32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Settings16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

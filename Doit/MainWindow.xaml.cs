@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using Doit.Settings;
 using Application = System.Windows.Application;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
@@ -276,6 +277,24 @@ namespace Doit
 		private void ActionsListBoxOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			_mainWindowViewModel.ExecuteSelectedAction();
+		}
+
+		private void SettingsButtonOnClick(object sender, RoutedEventArgs e)
+		{
+			var dialog = new SettingsDialog
+			{
+				Owner = this
+			};
+
+			var result = dialog.ShowDialog();
+
+			if (result.HasValue && result.Value)
+			{
+				((App)Application.Current).SetHotkey();
+				_mainWindowViewModel.UpdateActionProviders();
+
+				_mainWindowViewModel.UpdateActions();
+			}
 		}
 	}
 }

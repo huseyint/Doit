@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Doit.Actions;
@@ -10,15 +9,9 @@ namespace Doit.ActionProviders
 	{
 		private readonly RunApplicationAction[] _actions;
 
-		public RunApplicationActionProvider() : base("run")
+		public RunApplicationActionProvider(ICollection<string> searchFolders)
+			: base("run")
 		{
-			var searchFolders = new[]
-			{
-				Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu),
-				Environment.GetFolderPath(Environment.SpecialFolder.StartMenu),
-				////KnownFolders.GetKnownFolderPath(KnownFolders.QuickLaunch),
-			};
-
 			_actions = searchFolders
 				.SelectMany(f => Directory.GetFiles(f, "*.lnk", SearchOption.AllDirectories))
 				.Where(f => !f.ToLowerInvariant().Contains("uninstall"))

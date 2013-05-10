@@ -11,6 +11,7 @@ using Doit.ActionProviders;
 using Doit.Actions;
 using Doit.Infrastructure;
 using Doit.Native;
+using Doit.Settings;
 
 namespace Doit
 {
@@ -19,12 +20,12 @@ namespace Doit
 		private static readonly MainWindowViewModel _instance;
 
 		private readonly ObservableCollection<ActionItem> _actions;
-		
-		private readonly IActionProvider<IAction>[] _actionProviders;
-		
-		private readonly Dictionary<Type, IList<IActionProvider<IAction>>> _consumableTypeMap;
 
 		private readonly DispatcherTimer _timer;
+
+		private IActionProvider<IAction>[] _actionProviders;
+
+		private Dictionary<Type, IList<IActionProvider<IAction>>> _consumableTypeMap;
 
 		private string _query;
 		
@@ -44,42 +45,7 @@ namespace Doit
 			_actions = new ObservableCollection<ActionItem>();
 			_accumulatedActions = new ObservableCollection<IAction>();
 
-			_actionProviders = new IActionProvider<IAction>[]
-			{
-				new ApplicationActionProviders(),
-				new RunApplicationActionProvider { IsFallback = true },
-				new FindActionProvider { IsFallback = true },
-				new GoToAddressActionProvider(),
-				new SearchWebActionProvider("Google", "https://www.google.com/search?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Google32.png")), IsFallback = true },
-				new SearchWebActionProvider("Bing", "http://www.bing.com/search?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Bing32.png")) },
-				new SearchWebActionProvider("Duck", "https://duckduckgo.com/?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Duck32.png")) },
-				new SearchWebActionProvider("Wiki", "http://en.wikipedia.org/wiki/Special:Search?search={0}&go=Go") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Wiki32.png")) },
-				new SearchWebActionProvider("IMDB", "http://www.imdb.com/find?s=all&q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Imdb32.png")) },
-				new ZipFileActionProvider(),
-				new MailActionProvider(),
-				new ExplorerFileActionProvider(),
-				new ClipboardFileActionProvider(),
-				new ClipboardTextActionProvider(),
-				new CalculatorActionProvider { IsFallback = true },
-			};
-
-			_consumableTypeMap = new Dictionary<Type, IList<IActionProvider<IAction>>>();
-
-			foreach (var actionProvider in _actionProviders.Where(ap => ap.CanConsume != null && ap.CanConsume.Count > 0))
-			{
-				foreach (var type in actionProvider.CanConsume)
-				{
-					IList<IActionProvider<IAction>> providers;
-
-					if (!_consumableTypeMap.TryGetValue(type, out providers))
-					{
-						providers = new List<IActionProvider<IAction>>();
-						_consumableTypeMap[type] = providers;
-					}
-
-					providers.Add(actionProvider);
-				}
-			}
+			UpdateActionProviders();
 
 			_query = string.Empty;
 
@@ -286,6 +252,29 @@ namespace Doit
 			_lastActiveWindowHandle = NativeMethods.GetForegroundWindow();
 		}
 
+		public void UpdateActionProviders()
+		{
+			_actionProviders = GetActionProviders().ToArray();
+
+			_consumableTypeMap = new Dictionary<Type, IList<IActionProvider<IAction>>>();
+
+			foreach (var actionProvider in _actionProviders.Where(ap => ap.CanConsume != null && ap.CanConsume.Count > 0))
+			{
+				foreach (var type in actionProvider.CanConsume)
+				{
+					IList<IActionProvider<IAction>> providers;
+
+					if (!_consumableTypeMap.TryGetValue(type, out providers))
+					{
+						providers = new List<IActionProvider<IAction>>();
+						_consumableTypeMap[type] = providers;
+					}
+
+					providers.Add(actionProvider);
+				}
+			}
+		}
+
 		protected virtual void OnChangeVisibilityRequested(bool isVisible)
 		{
 			var handler = ChangeVisibilityRequested;
@@ -304,6 +293,32 @@ namespace Doit
 			{
 				handler(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+
+		private IEnumerable<IActionProvider<IAction>> GetActionProviders()
+		{
+			var settings = SettingsData.Load();
+
+			yield return new ApplicationActionProviders();
+
+			if (settings.ApplicationLauncherSettings.IsEnabled)
+			{
+				yield return new RunApplicationActionProvider(settings.ApplicationLauncherSettings.IndexLocations) { IsFallback = settings.ApplicationLauncherSettings.IsFallback };
+			}
+
+			yield return new FindActionProvider { IsFallback = true };
+			yield return new GoToAddressActionProvider();
+			yield return new SearchWebActionProvider("Google", "https://www.google.com/search?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Google32.png")), IsFallback = true };
+			yield return new SearchWebActionProvider("Bing", "http://www.bing.com/search?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Bing32.png")) };
+			yield return new SearchWebActionProvider("Duck", "https://duckduckgo.com/?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Duck32.png")) };
+			yield return new SearchWebActionProvider("Wiki", "http://en.wikipedia.org/wiki/Special:Search?search={0}&go=Go") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Wiki32.png")) };
+			yield return new SearchWebActionProvider("IMDB", "http://www.imdb.com/find?s=all&q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Imdb32.png")) };
+			yield return new ZipFileActionProvider();
+			yield return new MailActionProvider();
+			yield return new ExplorerFileActionProvider();
+			yield return new ClipboardFileActionProvider();
+			yield return new ClipboardTextActionProvider();
+			yield return new CalculatorActionProvider { IsFallback = true };
 		}
 	}
 }

@@ -165,6 +165,23 @@
 						</ItemsPanelTemplate>
 					</controls:ActionsListBox.ItemsPanel>
 				</controls:ActionsListBox>
+				
+				<Button
+					VerticalAlignment="Top"
+					HorizontalAlignment="Right"
+					Margin="2"
+					Cursor="Hand"
+					ToolTip="Settings..."
+					Click="SettingsButtonOnClick">
+					<Button.Template>
+						<ControlTemplate>
+							<Image 
+								Source="/Images/Settings16.png" 
+								Width="16" 
+								Height="16" />
+						</ControlTemplate>
+					</Button.Template>
+				</Button>
 			</Grid>
 		</Border>
 	</Border>
