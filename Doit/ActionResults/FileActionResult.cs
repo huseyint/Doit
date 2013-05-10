@@ -1,4 +1,4 @@
-﻿namespace Doit.Actions
+﻿namespace Doit.ActionResults
 {
 	public class FileActionResult : ActionResult
 	{

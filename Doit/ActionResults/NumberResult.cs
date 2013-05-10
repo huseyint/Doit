@@ -1,6 +1,4 @@
-﻿using Doit.Actions;
-
-namespace Doit.ActionResults
+﻿namespace Doit.ActionResults
 {
 	public class NumberResult : ActionResult
 	{

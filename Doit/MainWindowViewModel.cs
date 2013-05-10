@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Doit.ActionProviders;
+using Doit.ActionResults;
 using Doit.Actions;
 using Doit.Infrastructure;
 using Doit.Native;
