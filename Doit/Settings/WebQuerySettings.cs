@@ -5,6 +5,11 @@ namespace Doit.Settings
 	[XmlType]
 	public class WebQuerySettings
 	{
+		public WebQuerySettings()
+		{
+			IsEnabled = true;
+		}
+
 		[XmlAttribute]
 		public bool IsEnabled { get; set; }
 
