@@ -10,6 +10,50 @@
 		UseLayoutRounding="True"
 		SnapsToDevicePixels="True"
 		FocusManager.FocusedElement="{Binding ElementName=SectionsListBox}">
+	<Window.Resources>
+		<ControlTemplate x:Key="SectionListboxTemplate">
+			<Border
+				BorderBrush="#B3B3B3"
+				BorderThickness="0,0,1,0">
+				<ScrollViewer
+					Margin="0"
+					Focusable="false">
+					<StackPanel IsItemsHost="True" />
+				</ScrollViewer>
+			</Border>
+		</ControlTemplate>
+		
+		<Style x:Key="SectionListboxItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type ListBoxItem}">
+						<TextBlock
+							x:Name="TheBGControl"
+							Padding="4,6"
+							FontSize="12">
+							<ContentPresenter />
+						</TextBlock>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsSelected" Value="True">
+								<Setter 
+									Property="Background" 
+									Value="#257BC9" 
+									TargetName="TheBGControl" />
+								<Setter 
+									Property="Foreground" 
+									Value="White" 
+									TargetName="TheBGControl" />
+								<Setter 
+									Property="FontWeight" 
+									Value="Bold" 
+									TargetName="TheBGControl" />
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="180" />
@@ -22,11 +66,11 @@
 		
 		<ListBox
 			x:Name="SectionsListBox"
-			BorderBrush="LightGray"
-			BorderThickness="0,0,1,0"
 			ItemsSource="{Binding SettingsSections}"
 			DisplayMemberPath="Name"
-			SelectedItem="{Binding SelectedSettingsSection}" />
+			SelectedItem="{Binding SelectedSettingsSection}"
+			Template="{StaticResource SectionListboxTemplate}"
+			ItemContainerStyle="{StaticResource SectionListboxItemContainerStyle}" />
 		
 		<ContentControl 
 			Grid.Column="1"
@@ -37,7 +81,7 @@
 			Grid.ColumnSpan="2">
 			<Border
 				BorderThickness="0,1,0,0"
-				BorderBrush="LightGray">
+				BorderBrush="#B3B3B3">
 				<StackPanel
 					Orientation="Horizontal"
 					HorizontalAlignment="Right">
