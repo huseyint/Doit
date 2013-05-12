@@ -157,6 +157,7 @@ namespace Doit
 				else
 				{
 					_mainWindowViewModel.AccumulatedActions.Add(_mainWindowViewModel.SelectedAction.Action);
+					_mainWindowViewModel.PreviousQueries.Push(_mainWindowViewModel.Query);
 					_mainWindowViewModel.Query = string.Empty;
 				}
 
@@ -167,7 +168,15 @@ namespace Doit
 			{
 				_mainWindowViewModel.AccumulatedActions.RemoveAt(_mainWindowViewModel.AccumulatedActions.Count - 1);
 
+				if (_mainWindowViewModel.PreviousQueries.Count > 0)
+				{
+					_mainWindowViewModel.Query = _mainWindowViewModel.PreviousQueries.Pop();
+					InputBox.SelectionStart = InputBox.Text.Length;
+				}
+
 				_mainWindowViewModel.UpdateActions();
+
+				e.Handled = true;
 
 				return;
 			}

@@ -22,6 +22,8 @@ namespace Doit
 
 		private readonly ObservableCollection<ActionItem> _actions;
 
+		private readonly Stack<string> _previousQueries;
+
 		private readonly DispatcherTimer _timer;
 
 		private IActionProvider<IAction>[] _actionProviders;
@@ -45,6 +47,7 @@ namespace Doit
 		{
 			_actions = new ObservableCollection<ActionItem>();
 			_accumulatedActions = new ObservableCollection<IAction>();
+			_previousQueries = new Stack<string>();
 
 			UpdateActionProviders();
 
@@ -88,6 +91,11 @@ namespace Doit
 
 				OnPropertyChanged();
 			}
+		}
+
+		public Stack<string> PreviousQueries
+		{
+			get { return _previousQueries; }
 		}
 
 		public ObservableCollection<ActionItem> Actions
