@@ -39,6 +39,8 @@ namespace Doit.Actions
 			get { return typeof(NumberResult); }
 		}
 
+		public bool IsFallbackMatch { get; set; }
+
 		public double Value
 		{
 			get { return _value; }
@@ -48,8 +50,6 @@ namespace Doit.Actions
 		{
 			return new NumberResult { Value = _value };
 		}
-
-		public bool IsFallbackMatch { get; set; }
 
 		public override string ToString()
 		{

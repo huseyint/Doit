@@ -15,8 +15,8 @@ namespace Doit.Actions
 
 		Type ResultType { get; }
 
-		ActionResult Execute(ExecutionContext context);
-
 		bool IsFallbackMatch { get; set; }
+
+		ActionResult Execute(ExecutionContext context);
 	}
 }

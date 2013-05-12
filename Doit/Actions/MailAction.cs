@@ -36,6 +36,8 @@ namespace Doit.Actions
 			get { return typeof(ActionResult); }
 		}
 
+		public bool IsFallbackMatch { get; set; }
+
 		public ActionResult Execute(ExecutionContext context)
 		{
 			// http://kb.mozillazine.org/Command_line_arguments_(Thunderbird)
@@ -58,7 +60,5 @@ namespace Doit.Actions
 
 			return ActionResult.Default;
 		}
-
-		public bool IsFallbackMatch { get; set; }
 	}
 }

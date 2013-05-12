@@ -37,6 +37,8 @@ namespace Doit.Actions
 			get { return typeof(FileActionResult); }
 		}
 
+		public bool IsFallbackMatch { get; set; }
+
 		public ActionResult Execute(ExecutionContext context)
 		{
 			var fileActionResult = (FileActionResult)context.LastActionResult;
@@ -61,8 +63,6 @@ namespace Doit.Actions
 
 			return new FileActionResult { Paths = new[] { archiveFileName } };
 		}
-
-		public bool IsFallbackMatch { get; set; }
 
 		public override string ToString()
 		{

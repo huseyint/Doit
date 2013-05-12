@@ -51,6 +51,8 @@ namespace Doit.Actions
 			get { return typeof(ActionResult); }
 		}
 
+		public bool IsFallbackMatch { get; set; }
+
 		public ActionResult Execute(ExecutionContext context)
 		{
 			try
@@ -70,8 +72,6 @@ namespace Doit.Actions
 
 			return ActionResult.Default;
 		}
-
-		public bool IsFallbackMatch { get; set; }
 
 		public override string ToString()
 		{

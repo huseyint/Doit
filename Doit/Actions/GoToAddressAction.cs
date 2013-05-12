@@ -39,14 +39,14 @@ namespace Doit.Actions
 			get { return typeof(ActionResult); }
 		}
 
+		public bool IsFallbackMatch { get; set; }
+
 		public ActionResult Execute(ExecutionContext context)
 		{
 			Process.Start(_uri.AbsoluteUri);
 
 			return ActionResult.Default;
 		}
-
-		public bool IsFallbackMatch { get; set; }
 
 		public override string ToString()
 		{

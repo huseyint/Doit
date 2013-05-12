@@ -66,6 +66,8 @@ namespace Doit.Actions
 			get { return typeof(TextActionResult); }
 		}
 
+		public bool IsFallbackMatch { get; set; }
+
 		public ActionResult Execute(ExecutionContext context)
 		{
 			if (context.HasNextAction)
@@ -75,8 +77,6 @@ namespace Doit.Actions
 
 			return ActionResult.Default;
 		}
-
-		public bool IsFallbackMatch { get; set; }
 
 		public override string ToString()
 		{

@@ -23,6 +23,8 @@ namespace Doit.Actions
 			get { return typeof(ActionResult); }
 		}
 
+		public bool IsFallbackMatch { get; set; }
+
 		public ImageSource Icon { get; set; }
 
 		public ActionResult Execute(ExecutionContext context)
@@ -34,7 +36,5 @@ namespace Doit.Actions
 
 			return ActionResult.Default;
 		}
-
-		public bool IsFallbackMatch { get; set; }
 	}
 }
