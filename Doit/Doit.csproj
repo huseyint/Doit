@@ -109,6 +109,11 @@
     <Compile Include="Settings\SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings\WebQuerySettings.cs" />
+    <Compile Include="Settings\WebQuerySettingsSection.cs" />
+    <Compile Include="Settings\WebQuerySettingsSectionView.xaml.cs">
+      <DependentUpon>WebQuerySettingsSectionView.xaml</DependentUpon>
+    </Compile>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -133,8 +138,8 @@
     <Compile Include="ActionProviders\GoToAddressActionProvider.cs" />
     <Compile Include="Actions\MailAction.cs" />
     <Compile Include="ActionProviders\MailActionProvider.cs" />
-    <Compile Include="Actions\SearchWebAction.cs" />
-    <Compile Include="ActionProviders\SearchWebActionProvider.cs" />
+    <Compile Include="Actions\WebQueryAction.cs" />
+    <Compile Include="ActionProviders\WebQueryActionProvider.cs" />
     <Compile Include="Actions\TextAction.cs" />
     <Compile Include="Actions\ZipFileAction.cs" />
     <Compile Include="ActionProviders\ZipFileActionProvider.cs" />
@@ -179,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Settings\SettingsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings\WebQuerySettingsSectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

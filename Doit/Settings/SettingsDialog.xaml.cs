@@ -20,7 +20,8 @@ namespace Doit.Settings
 			_settingsSections = new ISettingsSection[]
 			{
 				new GeneralSettingsSection(settingsData.GeneralSettings),
-				new ApplicationLauncherSettingsSection(settingsData.ApplicationLauncherSettings), 
+				new ApplicationLauncherSettingsSection(settingsData.ApplicationLauncherSettings),
+				new WebQuerySettingsSection(settingsData.WebQuerySettings), 
 			};
 
 			SelectedSettingsSection = _settingsSections.FirstOrDefault();

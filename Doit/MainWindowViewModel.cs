@@ -307,13 +307,27 @@ namespace Doit
 				yield return new RunApplicationActionProvider(settings.ApplicationLauncherSettings.IndexLocations) { IsFallback = settings.ApplicationLauncherSettings.IsFallback };
 			}
 
+			if (settings.WebQuerySettings != null)
+			{
+				foreach (var webQuerySettings in settings.WebQuerySettings.Where(q => q.IsEnabled))
+				{
+					var searchWebActionProvider = new WebQueryActionProvider(webQuerySettings.Verb, webQuerySettings.Query)
+					{
+						IsFallback = webQuerySettings.IsFallback,
+					};
+
+					Uri iconUri;
+					if (Uri.TryCreate(webQuerySettings.IconPath, UriKind.Absolute, out iconUri))
+					{
+						searchWebActionProvider.Icon = new BitmapImage(iconUri);
+					}
+
+					yield return searchWebActionProvider;
+				}
+			}
+
 			yield return new FindActionProvider { IsFallback = true };
 			yield return new GoToAddressActionProvider();
-			yield return new SearchWebActionProvider("Google", "https://www.google.com/search?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Google32.png")), IsFallback = true };
-			yield return new SearchWebActionProvider("Bing", "http://www.bing.com/search?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Bing32.png")) };
-			yield return new SearchWebActionProvider("Duck", "https://duckduckgo.com/?q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Duck32.png")) };
-			yield return new SearchWebActionProvider("Wiki", "http://en.wikipedia.org/wiki/Special:Search?search={0}&go=Go") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Wiki32.png")) };
-			yield return new SearchWebActionProvider("IMDB", "http://www.imdb.com/find?s=all&q={0}") { Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Imdb32.png")) };
 			yield return new ZipFileActionProvider();
 			yield return new MailActionProvider();
 			yield return new ExplorerFileActionProvider();

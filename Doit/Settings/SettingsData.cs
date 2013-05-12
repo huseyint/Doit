@@ -14,11 +14,53 @@ namespace Doit.Settings
 		{
 			GeneralSettings = new GeneralSettings();
 			ApplicationLauncherSettings = new ApplicationLauncherSettings();
+			WebQuerySettings = new[]
+			{
+				new WebQuerySettings
+				{
+					IsEnabled = true,
+					IsFallback = true,
+					Verb = "google",
+					Query = "https://www.google.com/search?q={0}",
+					IconPath = "pack://application:,,,/Images/Google32.png",
+				}, 
+				new WebQuerySettings
+				{
+					IsEnabled = true,
+					Verb = "bing",
+					Query = "http://www.bing.com/search?q={0}",
+					IconPath = "pack://application:,,,/Images/Bing32.png",
+				}, 
+				new WebQuerySettings
+				{
+					IsEnabled = true,
+					Verb = "duck",
+					Query = "https://duckduckgo.com/?q={0}",
+					IconPath = "pack://application:,,,/Images/Duck32.png",
+				}, 
+				new WebQuerySettings
+				{
+					IsEnabled = true,
+					Verb = "wiki",
+					Query = "http://en.wikipedia.org/wiki/Special:Search?search={0}&go=Go",
+					IconPath = "pack://application:,,,/Images/Wiki32.png",
+				}, 
+				new WebQuerySettings
+				{
+					IsEnabled = true,
+					Verb = "imdb",
+					Query = "http://www.imdb.com/find?s=all&q={0}",
+					IconPath = "pack://application:,,,/Images/Imdb32.png",
+				}, 
+			};
 		}
 
 		public GeneralSettings GeneralSettings { get; set; }
 
 		public ApplicationLauncherSettings ApplicationLauncherSettings { get; set; }
+
+		[XmlArrayItem("WebQuery")]
+		public WebQuerySettings[] WebQuerySettings { get; set; }
 
 		public static SettingsData Load()
 		{

@@ -7,13 +7,13 @@ using Doit.Infrastructure;
 
 namespace Doit.Actions
 {
-	public class SearchWebAction : IAction
+	public class WebQueryAction : IAction
 	{
 		private readonly string _address;
 		private readonly string _query;
 		private string _hint;
 
-		public SearchWebAction(string address, string query, string name)
+		public WebQueryAction(string address, string query, string name)
 		{
 			_address = address;
 			_query = query;
