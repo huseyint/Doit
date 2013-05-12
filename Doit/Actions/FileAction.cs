@@ -110,6 +110,8 @@ namespace Doit.Actions
 			return ActionResult.PreventHide;
 		}
 
+		public bool IsFallbackMatch { get; set; }
+
 		public override string ToString()
 		{
 			return Text;

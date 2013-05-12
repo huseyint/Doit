@@ -35,7 +35,14 @@ namespace Doit.ActionProviders
 
 			if (IsFallback)
 			{
-				return OfferCore(query);
+				var actions = OfferCore(query);
+
+				foreach (var action in actions)
+				{
+					action.IsFallbackMatch = true;
+				}
+
+				return actions;
 			}
 
 			return Enumerable.Empty<T>();

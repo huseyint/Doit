@@ -62,6 +62,8 @@ namespace Doit.Actions
 			return new FileActionResult { Paths = new[] { archiveFileName } };
 		}
 
+		public bool IsFallbackMatch { get; set; }
+
 		public override string ToString()
 		{
 			return Text;

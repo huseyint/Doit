@@ -137,6 +137,7 @@ namespace Doit
 				actions = _actionProviders
 					.SelectMany(ap => ap.Offer(Query))
 					.Where(a => a != null)
+					.OrderBy(a => a.IsFallbackMatch)
 					.Take(10)
 					.ToArray();
 			}

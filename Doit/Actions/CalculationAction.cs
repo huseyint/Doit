@@ -49,6 +49,8 @@ namespace Doit.Actions
 			return new NumberResult { Value = _value };
 		}
 
+		public bool IsFallbackMatch { get; set; }
+
 		public override string ToString()
 		{
 			return Text;

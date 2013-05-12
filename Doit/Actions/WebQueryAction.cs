@@ -45,6 +45,8 @@ namespace Doit.Actions
 			return ActionResult.Default;
 		}
 
+		public bool IsFallbackMatch { get; set; }
+
 		public override string ToString()
 		{
 			return string.Format("Search {0}", _query);

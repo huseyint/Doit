@@ -34,5 +34,7 @@ namespace Doit.Actions
 
 			return ActionResult.Default;
 		}
+
+		public bool IsFallbackMatch { get; set; }
 	}
 }
