@@ -35,7 +35,7 @@ namespace Doit.ActionProviders
 
 			if (IsFallback)
 			{
-				var actions = OfferCore(query);
+				var actions = OfferCore(query).ToArray();
 
 				foreach (var action in actions)
 				{
