@@ -4,11 +4,12 @@ using System.Xml.Serialization;
 namespace Doit.Settings
 {
 	[XmlType]
-	public class WebQuerySettings
+	public class FindFilesSettings
 	{
-		public WebQuerySettings()
+		public FindFilesSettings()
 		{
 			IsEnabled = true;
+			IsFallback = true;
 		}
 
 		[XmlAttribute]
@@ -16,16 +17,7 @@ namespace Doit.Settings
 		public bool IsEnabled { get; set; }
 
 		[XmlAttribute]
-		[DefaultValue(false)]
+		[DefaultValue(true)]
 		public bool IsFallback { get; set; }
-
-		[XmlAttribute]
-		public string Verb { get; set; }
-
-		[XmlAttribute]
-		public string Query { get; set; }
-
-		[XmlAttribute]
-		public string IconPath { get; set; }
 	}
 }

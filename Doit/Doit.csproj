@@ -99,6 +99,11 @@
     <Compile Include="Settings\ApplicationLauncherSettingsSectionView.xaml.cs">
       <DependentUpon>ApplicationLauncherSettingsSectionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings\FindFilesSettings.cs" />
+    <Compile Include="Settings\FindFilesSettingsSection.cs" />
+    <Compile Include="Settings\FindFilesSettingsSectionView.xaml.cs">
+      <DependentUpon>FindFilesSettingsSectionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings\GeneralSettings.cs" />
     <Compile Include="Settings\GeneralSettingsSection.cs" />
     <Compile Include="Settings\GeneralSettingsSectionView.xaml.cs">
@@ -176,6 +181,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Settings\ApplicationLauncherSettingsSectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings\FindFilesSettingsSectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

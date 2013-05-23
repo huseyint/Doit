@@ -53,6 +53,7 @@ namespace Doit.Settings
 					IconPath = "pack://application:,,,/Images/Imdb32.png",
 				}, 
 			};
+			FindFilesSettings = new FindFilesSettings();
 		}
 
 		public GeneralSettings GeneralSettings { get; set; }
@@ -61,6 +62,8 @@ namespace Doit.Settings
 
 		[XmlArrayItem("WebQuery")]
 		public WebQuerySettings[] WebQuerySettings { get; set; }
+
+		public FindFilesSettings FindFilesSettings { get; set; }
 
 		public static SettingsData Load()
 		{

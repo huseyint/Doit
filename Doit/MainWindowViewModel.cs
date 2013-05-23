@@ -335,7 +335,11 @@ namespace Doit
 				}
 			}
 
-			yield return new FindActionProvider { IsFallback = true };
+			if (settings.FindFilesSettings.IsEnabled)
+			{
+				yield return new FindActionProvider { IsFallback = settings.FindFilesSettings.IsFallback };
+			}
+
 			yield return new GoToAddressActionProvider();
 			yield return new ZipFileActionProvider();
 			yield return new MailActionProvider();

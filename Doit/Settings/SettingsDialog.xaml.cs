@@ -22,6 +22,7 @@ namespace Doit.Settings
 				new GeneralSettingsSection(settingsData.GeneralSettings),
 				new ApplicationLauncherSettingsSection(settingsData.ApplicationLauncherSettings),
 				new WebQuerySettingsSection(settingsData.WebQuerySettings), 
+				new FindFilesSettingsSection(settingsData.FindFilesSettings), 
 			};
 
 			SelectedSettingsSection = _settingsSections.FirstOrDefault();

@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Doit.Settings.FindFilesSettingsSectionView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 mc:Ignorable="d" 
+			 d:DesignWidth="400">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<CheckBox
+			Margin="4,2"
+			IsChecked="{Binding Settings.IsEnabled}">
+			<Label 
+				Content="Enabled"
+				Padding="0"/>
+		</CheckBox>
+
+		<CheckBox
+			Grid.Row="1"
+			Margin="4,2"
+			IsChecked="{Binding Settings.IsFallback}">
+			<Label 
+				Content="Fallback"
+				Padding="0"/>
+		</CheckBox>
+		
+		<Border
+			Grid.Row="2"
+			Background="#FEFBCD"
+			BorderBrush="#ACA899"
+			BorderThickness="1"
+			Margin="4"
+			Padding="4">
+			<TextBlock>Windows Search Indexing must be enabled to use this feature.</TextBlock>
+		</Border>
+		
+		<Button
+			Grid.Row="3"
+			Content="Windows Search Indexing Options..."
+			Command="{Binding OpenIndexingOptionsCommand}"
+			Margin="4"
+			Padding="4,1"
+			HorizontalAlignment="Left" />
+	</Grid>
+</UserControl>
