@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using Doit.Actions;
+using Doit.Infrastructure;
 
 namespace Doit.ActionProviders
 {
@@ -19,7 +22,9 @@ namespace Doit.ActionProviders
 				yield break;
 			}
 
-			var fileDropList = Clipboard.GetFileDropList();
+			StringCollection fileDropList = null;
+
+			Utils.RunOnStaThread(() => fileDropList = Clipboard.GetFileDropList());
 
 			if (fileDropList.Count == 1)
 			{

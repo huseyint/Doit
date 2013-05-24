@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using Doit.Actions;
+using Doit.Infrastructure;
 
 namespace Doit.ActionProviders
 {
@@ -19,7 +20,9 @@ namespace Doit.ActionProviders
 				yield break;
 			}
 
-			var text = Clipboard.GetText();
+			string text = null;
+
+			Utils.RunOnStaThread(() => text = Clipboard.GetText());
 
 			if (!string.IsNullOrEmpty(text))
 			{

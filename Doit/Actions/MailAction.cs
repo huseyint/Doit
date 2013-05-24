@@ -13,7 +13,7 @@ namespace Doit.Actions
 
 		static MailAction()
 		{
-			_icon = new BitmapImage(new Uri("pack://application:,,,/Images/Mail32.png"));
+			_icon = Utils.GetFreezedImage("Mail32.png");
 		}
 
 		public string Text

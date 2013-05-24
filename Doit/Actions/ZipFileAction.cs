@@ -14,7 +14,7 @@ namespace Doit.Actions
 
 		static ZipFileAction()
 		{
-			_icon = new BitmapImage(new Uri("pack://application:,,,/Images/Zip32.png"));
+			_icon = Utils.GetFreezedImage("Zip32.png");
 		}
 
 		public string Text

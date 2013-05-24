@@ -14,7 +14,7 @@ namespace Doit.Actions
 
 		static CalculationAction()
 		{
-			_icon = new BitmapImage(new Uri("pack://application:,,,/Images/Calculate32.png"));
+			_icon = Utils.GetFreezedImage("Calculate32.png");
 		}
 
 		public CalculationAction(double value)

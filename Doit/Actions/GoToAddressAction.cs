@@ -18,7 +18,7 @@ namespace Doit.Actions
 			_uri = uri;
 
 			Text = string.Format("Go to {0}", _uri.AbsoluteUri);
-			_icon = new BitmapImage(new Uri("pack://application:,,,/Images/OpenViewInBrowser32.png"));
+			_icon = Utils.GetFreezedImage("OpenViewInBrowser32.png");
 			_hint = "Goes to web address on browser";
 		}
 

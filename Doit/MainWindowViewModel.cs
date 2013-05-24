@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Doit.ActionProviders;
@@ -13,6 +15,7 @@ using Doit.Actions;
 using Doit.Infrastructure;
 using Doit.Native;
 using Doit.Settings;
+using ExecutionContext = Doit.Infrastructure.ExecutionContext;
 
 namespace Doit
 {
@@ -134,40 +137,11 @@ namespace Doit
 			get { return _lastActiveWindowHandle; }
 		}
 
-		public void UpdateActions()
+		public async Task UpdateActions()
 		{
+			var actions = await Task.Run((Func<IAction[]>)QueryProviders);
+
 			Actions.Clear();
-
-			IAction[] actions;
-
-			if (_accumulatedActions.Count == 0)
-			{
-				actions = _actionProviders
-					.SelectMany(ap => ap.Offer(Query))
-					.Where(a => a != null)
-					.OrderBy(a => a.IsFallbackMatch)
-					.Take(10)
-					.ToArray();
-			}
-			else
-			{
-				var lastAccumulatedAction = _accumulatedActions.Last();
-
-				var nextActions = new HashSet<IAction>();
-
-				foreach (var map in _consumableTypeMap)
-				{
-					if (map.Key.IsAssignableFrom(lastAccumulatedAction.ResultType))
-					{
-						foreach (var action in map.Value.SelectMany(ap => ap.Offer(lastAccumulatedAction, Query)))
-						{
-							nextActions.Add(action);
-						}
-					}
-				}
-
-				actions = nextActions.ToArray();
-			}
 
 			if (ExecuteActionWhenAvailable)
 			{
@@ -189,7 +163,7 @@ namespace Doit
 			SelectedAction = Actions.FirstOrDefault();
 		}
 
-		public void ExecuteAction(IAction action)
+		public async void ExecuteAction(IAction action)
 		{
 			Debug.WriteLine("ExecuteAction, Last Selected Query: {0}, Current Query: {1}", LastSelectedQuery, Query);
 
@@ -198,7 +172,7 @@ namespace Doit
 				Debug.WriteLine("Last and Current Queries are different, updating actions...");
 
 				_timer.Stop();
-				UpdateActions();
+				await UpdateActions();
 
 				action = SelectedAction.Action;
 
@@ -328,7 +302,7 @@ namespace Doit
 					Uri iconUri;
 					if (Uri.TryCreate(webQuerySettings.IconPath, UriKind.Absolute, out iconUri))
 					{
-						searchWebActionProvider.Icon = new BitmapImage(iconUri);
+						searchWebActionProvider.Icon = Utils.GetFreezedImage(iconUri);
 					}
 
 					yield return searchWebActionProvider;
@@ -347,6 +321,45 @@ namespace Doit
 			yield return new ClipboardFileActionProvider();
 			yield return new ClipboardTextActionProvider();
 			yield return new CalculatorActionProvider { IsFallback = true };
+		}
+
+		private IAction[] QueryProviders()
+		{
+			try
+			{
+				if (_accumulatedActions.Count == 0)
+				{
+					return _actionProviders
+						.SelectMany(ap => ap.Offer(Query))
+						.Where(a => a != null)
+						.OrderBy(a => a.IsFallbackMatch)
+						.Take(10)
+						.ToArray();
+				}
+				
+				var lastAccumulatedAction = _accumulatedActions.Last();
+
+				var nextActions = new HashSet<IAction>();
+
+				foreach (var map in _consumableTypeMap)
+				{
+					if (map.Key.IsAssignableFrom(lastAccumulatedAction.ResultType))
+					{
+						foreach (var action in map.Value.SelectMany(ap => ap.Offer(lastAccumulatedAction, Query)))
+						{
+							nextActions.Add(action);
+						}
+					}
+				}
+
+				return nextActions.ToArray();
+			}
+			catch (Exception exception)
+			{
+				Debug.Assert(false, exception.Message);
+
+				return new IAction[0];
+			}
 		}
 	}
 }

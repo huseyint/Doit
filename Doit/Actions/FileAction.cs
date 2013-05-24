@@ -34,11 +34,12 @@ namespace Doit.Actions
 			if (_path != null)
 			{
 				ushort uicon;
-				var handle = NativeMethods.ExtractAssociatedIcon(new WindowInteropHelper(Application.Current.MainWindow).Handle, new StringBuilder(_path), out uicon);
+				var handle = NativeMethods.ExtractAssociatedIcon(((App)Application.Current).MainWindowHandle, new StringBuilder(_path), out uicon);
 
 				try
 				{
 					_icon = Imaging.CreateBitmapSourceFromHIcon(handle, new Int32Rect(0, 0, 32, 32), BitmapSizeOptions.FromEmptyOptions());
+					_icon.Freeze();
 				}
 				finally
 				{
@@ -58,7 +59,7 @@ namespace Doit.Actions
 
 			_paths = paths;
 
-			_icon = new BitmapImage(new Uri("pack://application:,,,/Images/Files32.png"));
+			_icon = Utils.GetFreezedImage("Files32.png");
 		}
 
 		public Type ResultType

@@ -19,7 +19,7 @@ namespace Doit.Actions
 
 		static TextAction()
 		{
-			_icon = new BitmapImage(new Uri("pack://application:,,,/Images/Text32.png"));
+			_icon = Utils.GetFreezedImage("Text32.png");
 		}
 
 		public TextAction(string text)

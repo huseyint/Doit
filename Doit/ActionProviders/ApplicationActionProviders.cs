@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media.Imaging;
 using Doit.Actions;
+using Doit.Infrastructure;
 
 namespace Doit.ActionProviders
 {
@@ -15,7 +15,7 @@ namespace Doit.ActionProviders
 		{
 			_actions = new Dictionary<string, DelegateAction>(StringComparer.InvariantCultureIgnoreCase)
 			{
-				{ "quit", new DelegateAction(Quit) { Text = "Quit", Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Quit32.png")), Hint = "Bye!" } },
+				{ "quit", new DelegateAction(Quit) { Text = "Quit", Icon = Utils.GetFreezedImage("Quit32.png"), Hint = "Bye!" } },
 			};
 		}
 

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Interop;
 using Doit.Infrastructure;
 using Doit.Native;
 using Doit.Settings;
+using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 
 namespace Doit
@@ -16,7 +18,14 @@ namespace Doit
 
 		private HotKey _hotkey;
 
+		private IntPtr _mainWindowHandle;
+
 		public bool StartHidden { get; set; }
+
+		public IntPtr MainWindowHandle
+		{
+			get { return _mainWindowHandle; }
+		}
 
 		[STAThread]
 		public static void Main()
@@ -91,6 +100,8 @@ namespace Doit
 			SetHotkey();
 
 			mainWindow.Show();
+
+			_mainWindowHandle = new WindowInteropHelper(mainWindow).Handle;
 		}
 
 		private void OnHotKeyPressed(HotKey k)
