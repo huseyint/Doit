@@ -1,4 +1,4 @@
 # Doit
 An Alfred-esque application launcher for Windows.
 
-![screencast](http://i.imgur.com/BIFyNQJ.gif)
+![screencast](https://raw.githubusercontent.com/huseyint/Doit/master/screencast.gif)
